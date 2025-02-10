@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clicker Site</title>
+    <style>
+        body { text-align: center; font-family: Arial, sans-serif; margin-top: 50px; }
+        #counter { font-size: 40px; margin-bottom: 20px; }
+        #phoneForm { display: none; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>클리커 사이트</h1>
+    <div id="counter">0</div>
+    <button id="clickBtn">Click Me</button>
+
+    <div id="phoneForm">
+        <p>500만 돌파! 전화번호를 입력하세요:</p>
+        <input type="text" id="phoneInput" placeholder="전화번호 입력">
+        <button id="submitPhone">전송</button>
+    </div>
+
+    <script>
+        // 기존 값 가져오기 (없으면 0으로 초기화)
+        let count = localStorage.getItem("clickCount") ? parseInt(localStorage.getItem("clickCount")) : 0;
+        const counterElement = document.getElementById("counter");
+        const phoneForm = document.getElementById("phoneForm");
+
+        // 현재 카운트 표시
+        counterElement.innerText = count.toLocaleString();
+
+        // 클릭 시 카운트 증가
+        document.getElementById("clickBtn").addEventListener("click", () => {
+            count++;
+            localStorage.setItem("clickCount", count);
+            counterElement.innerText = count.toLocaleString();
+
+            // 500만 도달 시 전화번호 입력창 표시
+            if (count >= 5000000) {
+                phoneForm.style.display = "block";
+            }
+        });
+
+        // 전화번호 입력 후 전송
+        document.getElementById("submitPhone").addEventListener("click", () => {
+            const phoneNumber = document.getElementById("phoneInput").value;
+            console.log("입력된 전화번호:", phoneNumber);
+            alert("전송 완료!");
+            phoneForm.style.display = "none";
+        });
+    </script>
+</body>
+</html>
